@@ -44,6 +44,10 @@ function App() {
     );
   }
 
+  function getDataForm(product:any) {
+    console.log(product);
+  }
+
   return (
     <>
       {/* Nav Bar */}
@@ -80,7 +84,7 @@ function App() {
         <Modal.Header>Create Product</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            <FormCreateProductComponent />
+            <FormCreateProductComponent getDataForm={getDataForm} />
           </div>
         </Modal.Body>
         <Modal.Footer>
