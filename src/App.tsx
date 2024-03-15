@@ -22,6 +22,7 @@ function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [openModal, setOpenModal] = useState(false);
+  const [dataForm, setDataForm] = useState({});
 
   useEffect(() => {
     setStatus("loading");
@@ -44,12 +45,31 @@ function App() {
     );
   }
 
-  function getDataForm(product:any) {
-    console.log(product);
+  function getDataForm(product: any) {
+    setDataForm(product);
   }
 
+  const createProduct = () => {
+    fetch("https://fakestoreapi.com/products", {
+      method: "POST",
+      body: JSON.stringify(dataForm),
+      headers: {
+        "Content-type": "application/json;",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Product created successfully!");
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setOpenModal(false);
+  };
+
   return (
-    <>
+    <div>
       {/* Nav Bar */}
       <NavBarComponent />
 
@@ -88,7 +108,7 @@ function App() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setOpenModal(false)}>Create</Button>
+          <Button onClick={() => createProduct()}>Create</Button>
           <Button color="gray" onClick={() => setOpenModal(false)}>
             Cancel
           </Button>
@@ -97,7 +117,7 @@ function App() {
 
       {/* Footer */}
       <FooterComponent />
-    </>
+    </div>
   );
 }
 

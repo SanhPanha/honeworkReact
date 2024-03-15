@@ -6,7 +6,7 @@ type ErrorType = {
   price: string;
 };
 
-export default function FormCreateProductComponent(getDataForm: any) {
+export default function FormCreateProductComponent({getDataForm}:any) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
@@ -52,6 +52,10 @@ export default function FormCreateProductComponent(getDataForm: any) {
       });
     }
   }, [title, price]);
+
+  useEffect(() => {
+    getDataForm({ title, price, description, category, image });
+  }, [title, price, description, category, image]);
 
   return (
     <form className="flex max-w-md flex-col gap-4">
